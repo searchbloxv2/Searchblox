@@ -26,6 +26,18 @@ const get = async (url) => {
   }
 };
 
+async function joinGame(serverId) {
+  try {
+    const request = await fetch(`https://games.roblox.com/v1/games/${serverId}/join`, {
+      method: 'POST',
+    });
+    if (!request.ok) throw new Error('Failed to join game');
+    console.log('Successfully joined game!');
+  } catch (error) {
+    console.error(error);
+  }
+}
+
 const post = async (url, body) => {
   try {
     const request = await fetch(`https://${url}`, {
@@ -216,6 +228,10 @@ async function findTarget(imageUrl, place) {
   search.src = getURL('images/search.png');
 }
 
+if (targetFound) {
+  joinGame(serverId);
+}
+
 function renderServers() {
   highlighted.forEach((item) => {
     item.remove();    
@@ -305,3 +321,5 @@ search.addEventListener('click', async event => {
 
   find(imageUrl, place);
 });
+
+
